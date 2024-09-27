@@ -1,0 +1,115 @@
+#!/usr/bin/python
+
+##########################################################################
+## Initial Snakemake concept, runing the pipeline for individual files.##
+##########################################################################
+
+## Not used for 2 reasons:
+## 1: Large calculation overhead when snakemake builds the DAG of jobs
+## 2: The grouping feature of Snakemake pre-assign jobs to the threads, which leads to very inefficient use of parralel processing as most thread sit idle waiting for the longer CrisprDetect jobs to finish
+
+## Dry run the pipeline
+# snakemake -s Snakefile_indv --dryrun -pk --profile profile_short --rerun-incomplete > output.txt
+## Actually running the pipeline
+# snakemake -s Snakefile_indv -pk --profile profile_short --rerun-incomplete > output.txt
+
+
+# # Assigning batch idx to each genomes
+# batch_idx =[]
+# n_batches = 112 # need to be calculated
+# batch_size = 10000
+# for n in range(n_batches):
+#     batch_idx= batch_idx+[n]*10000
+
+# get list
+new_genome_list = []
+with open(r"genomes_list/2022-09-07_assembly_summary_og_filtered.txt",'r') as f:
+    next(f)
+    next(f)
+    for line in f:
+        line = line.strip().split('\t')
+        for i in line :
+            if i.startswith('https://ftp') :
+                new_genome_list.append(i)
+
+
+# 8:10
+all_ftp_list = new_genome_list[0:10]
+download_links ={}
+
+for ftp in all_ftp_list:
+    address = ''.join(ftp.split(':')[1:])
+    fasta = ''.join(ftp.split('/')[-1])
+    ftp = 'https:' + str(address) + '/' + fasta + '_genomic.fna.gz'
+    
+    download_links[fasta] = 'curl ' + ftp
+
+
+rule all:
+  input:
+    expand("tp/crisprD/{genome}_genomic.fna.cd", genome = list(download_links.keys()))
+  # group:
+  #   "batch_group"
+  shell: 
+    """
+    cd /home/jpcle8/scratch/MAJ_CrisprOpenDB/CrisprOpenDB/CrisprOpenDB/SpacersDB/
+    bash /home/jpcle8/scratch/MAJ_CrisprOpenDB/CrisprOpenDB/CrisprOpenDB/SpacersDB/runCrisprOpendb.sh
+    echo Done! >> file.txt
+    # sbatch /home/jpcle8/scratch/MAJ_CrisprOpenDB/CrisprOpenDB/CrisprOpenDB/SpacersDB/cleanup.sh
+     """
+
+rule download:
+  output:
+    "tp/download/{genome}_genomic.fna.gz"
+  group:
+    "batch_group"
+  log:
+      "logs/download/{genome}.log"
+  run:
+    shell(download_links[wildcards.genome] + " -o tp/download/"+ wildcards.genome +"_genomic.fna.gz &>{log}" )
+
+rule unzip:
+  input:
+    "tp/download/{genome}_genomic.fna.gz"
+  output:
+    "tp/download/{genome}_genomic.fa"
+  group:
+    "batch_group"
+  log:
+      "logs/unzip/{genome}.log"
+  shell:
+    """
+    gunzip -c {input} > {output} &>{log}
+    # gunzip {input} 2> {log}
+    # find logs/unzip -size 0 -delete
+    """
+
+rule criprDetect:
+  input:
+    "tp/download/{genome}_genomic.fa"
+  output:
+    "tp/crisprD/{genome}_genomic.fna.cd"
+
+  group:
+    "batch_group"
+  log:
+      "logs/crisprD/{genome}.log"
+    
+  shell:
+    """
+    module load emboss/6.6.0
+    module load viennarna/2.5.1
+    module load cd-hit/4.8.1
+    module load StdEnv/2020
+    module load gcc/9.3.0
+    module load blast+/2.13.0
+
+    start=`date +%s`
+    perl /home/jpcle8/Downloads/CRISPRDetect_2.2/CRISPRDetect.pl -f {input} -o {output} -T 1 -array_quality_score_cutoff 3 &>{log}
+
+    end=`date +%s`
+
+    runtime=$((end-start))
+    echo $runtime >> timer.txt
+    """
+

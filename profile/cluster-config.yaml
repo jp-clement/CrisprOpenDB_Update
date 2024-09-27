@@ -1,0 +1,9 @@
+__default__ :
+        ntasks: 1
+        # cpus-per-task: "{threads}"
+        cpus-per-task: 32
+        nodes: "1"
+        output: "logs/stdout_%j.out"
+        error: "logs/error_log_%j.err"
+        account: "def-aldoy11"
+        

@@ -1,0 +1,43 @@
+
+# cluster-cancel: "scancel"
+restart-times: "0"
+jobscript: "slurm-jobscript.sh"
+cluster: "slurm-submit.py"
+cluster-status: "slurm-status.py"
+max-jobs-per-second: "10"
+max-status-checks-per-second: "10"
+local-cores: 1
+latency-wait: "5"
+use-conda: "False"
+use-singularity: "False"
+printshellcmds: "True"
+use-envmodules: "True"
+group-components: "batch_group=1"
+jobs: "80"
+cores: "32" 
+
+
+# resource configuration
+default-resources:
+  - runtime=1
+  - mem_mb=600
+
+# # set-threads: map rule names to threads
+set-threads:
+  - download=1
+  - unzip=32
+  - criprDetect=32
+
+# set-resources: map rule names to resources in general
+set-resources:
+  - download:mem_mb=1000
+  - download:runtime=60
+  - criprDetect:runtime=1000
+  - criprDetect:mem_mb=32000
+  - updateDB:runtime=60
+  - updateDB:mem_mb=4000
+  - unzip:runtime=10
+  - fetch_taxonomy:runtime=300
+  - fetch_taxonomy:mem_mb=4000
+  # - criprDetect:partition=default
+  

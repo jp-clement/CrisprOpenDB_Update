@@ -1,0 +1,26 @@
+[GENERAL]
+alloc: rrg-eroussea
+genomes_list/09-27-24_assembly_summary.txt
+files_per_batch: 10000
+database_path : ../CrisprOpenDB/CrisprOpenDB/SpacersDB/CrisprOpenDB.sqlite
+
+[DOWNLOAD]
+working_dir: /home/gncou1/scratch/CrisprOpenDB_Update/
+output_path: ${SLURM_TMPDIR}/
+
+[UNZIP]
+input_path: ${SLURM_TMPDIR}/
+
+[CRISPR_DETECT]
+crisprDetect_exec_path: ../CRISPRDetect/CRISPRDetect_2.2/
+input_path: ${SLURM_TMPDIR}/
+output_path: ${SLURM_TMPDIR}/
+
+[UPDATE_SPACER_TABLE]
+input_path: output/spacers
+output_path: output/archive
+
+[UPDATE_ORGANISM_TABLE]
+input_path: output/taxonomy
+output_path: output/archive
+
