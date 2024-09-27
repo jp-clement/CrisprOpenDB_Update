@@ -5,6 +5,7 @@ bash run_pipeline.sh
 
 This will:
 - set up the venv
+-  Set up the directory structure (git doesn't allow empty directories)
 - download the most recent set of assembly from NCBI
 - generate a new set of bash scripts from the new assembly list
 - remove all log files
