@@ -21,3 +21,5 @@ profile/config.yaml
 
 Most of the other parameter (e.g. location of the CrisprOpenDB.sqlite file or the assembly_list) can be modified in the file:
 profile/python_params.txt
+
+## This pipeline must be run on a cluster that has internet acces in order for the rule ''fetch_taxonomy'' to work. 
