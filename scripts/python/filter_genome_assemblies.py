@@ -6,7 +6,7 @@ config.read('profile/python_params.txt')
 
 ASSEMBLY = config.get('GENERAL', 'assembly_file')
 ALLOC = config.get('GENERAL', 'alloc')
-DB_FILE = config.get('FILTER_ASSEMBLIES', 'database_path')
+DB_FILE = config.get('GENERAL', 'database_path')
 
 def filter_genomes_list(db_file, genome_file):
     output_file = genome_file.split('.txt')[0] +"_filtered.txt"    
