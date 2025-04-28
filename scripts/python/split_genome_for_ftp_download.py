@@ -6,7 +6,7 @@ config = configparser.RawConfigParser()
 config.read('profile/python_params.txt')
 # print(config_config.sections())
 
-ASSEMBLY = config.get('GENERAL', 'alignment_file')
+ASSEMBLY = config.get('GENERAL', 'assembly_file')
 ALLOC = config.get('GENERAL', 'alloc')
 FILES_PER_BATCH = int(config.get('GENERAL', 'files_per_batch'))
 OUTPUT_PATH = config.get('DOWNLOAD', 'output_path')

@@ -4,7 +4,7 @@ import sys, datetime, configparser
 config = configparser.RawConfigParser()
 config.read('profile/python_params.txt')
 
-ASSEMBLY = config.get('GENERAL', 'alignment_file')
+ASSEMBLY = config.get('GENERAL', 'assembly_file')
 ALLOC = config.get('GENERAL', 'alloc')
 FILES_PER_BATCH = int(config.get('GENERAL', 'files_per_batch'))
 INPUT_PATH = config.get('UNZIP', 'input_path')

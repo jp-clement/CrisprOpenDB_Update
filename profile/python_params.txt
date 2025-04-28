@@ -1,6 +1,6 @@
 [GENERAL]
 alloc: rrg-eroussea
-assembly_file: genomes_list/09-27-24_assembly_summary.txt
+assembly_file: genomes_list/04-28-25_assembly_summary_filtered.txt
 files_per_batch: 10000
 database_path : ../CrisprOpenDB/CrisprOpenDB/SpacersDB/CrisprOpenDB.sqlite
 
