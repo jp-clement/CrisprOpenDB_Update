@@ -43,7 +43,6 @@ sed -i "3 c\\${NEW_ASSEMBLY}" profile/python_params.txt
 # Generate bash scripts
 find scripts/bash_jobs/ -type f -exec rm -rf {} \;
 
-python scripts/python/split_genome_for_crisprdetect_simple.py
 python scripts/python/split_genome_for_crisprdetect.py
 python scripts/python/split_genome_for_ftp_download.py
 python scripts/python/split_genome_for_gunzip.py
