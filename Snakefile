@@ -98,7 +98,6 @@ rule saveSpacers:
     "logs/completion_flags/completed_crisprDetect_batch_{batch}.txt"
   output:
     "logs/completion_flags/completed_saveSpacers_{batch}.tsv"
-
   group:
     "batch_group"
   log:
@@ -117,10 +116,11 @@ rule saveSpacers:
 
 rule fetch_taxonomy:
   input:
-
     "logs/completion_flags/completed_saveSpacers_{batch}.tsv"
   output:
     "logs/completion_flags/completed_taxonomy_{batch}.txt"
+  group:
+    "batch_group"
   log:
       "logs/saveSpacers/spacers_{batch}.log"
   threads: 1    

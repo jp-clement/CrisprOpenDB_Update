@@ -12,7 +12,7 @@ output_path: ${SLURM_TMPDIR}/
 input_path: ${SLURM_TMPDIR}/
 
 [CRISPR_DETECT]
-crisprDetect_exec_path: ../CRISPRDetect/CRISPRDetect_2.2/
+crisprDetect_exec_path: ../CRISPRDetect_2.2/
 input_path: ${SLURM_TMPDIR}/
 output_path: ${SLURM_TMPDIR}/
 

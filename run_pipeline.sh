@@ -1,4 +1,7 @@
 #!/bin/bash
+#SBATCH --time=167:00:00
+#SBATCH --account=def-aldoy11 
+#SBATCH -o logs/run_pipeline.out
 
 # Building venv
 echo "Building venv" 
@@ -22,7 +25,7 @@ mkdir /genomes_list/
 mkdir archive
 mkdir scripts/bash
 
-rm -r output/
+find output/ -type f -exec rm -rf {} \;
 mkdir output/
 mkdir output/archive/
 mkdir output/spacers/
@@ -39,12 +42,12 @@ mkdir logs/completion_flags/
 mkdir logs/saveSpacers/
 
 
-# Get genome assembly list
-echo "Getting genome assembly list" 
-wget ftp://ftp.ncbi.nih.gov/genomes/genbank/bacteria/assembly_summary.txt -O genomes_list/$(date +"%m-%d-%y")_assembly_summary.txt
+# # Get genome assembly list
+# echo "Getting genome assembly list" 
+# wget ftp://ftp.ncbi.nih.gov/genomes/genbank/bacteria/assembly_summary.txt -O genomes_list/$(date +"%m-%d-%y")_assembly_summary.txt
 
-NEW_ASSEMBLY=genomes_list/$(date +"%m-%d-%y")_assembly_summary.txt
-sed -i "3 c\\assembly_file: ${NEW_ASSEMBLY}" profile/python_params.txt
+# NEW_ASSEMBLY=genomes_list/$(date +"%m-%d-%y")_assembly_summary.txt
+# sed -i "3 c\\assembly_file: ${NEW_ASSEMBLY}" profile/python_params.txt
 
 # Generate bash scripts
 echo "Generate bash scripts" 
