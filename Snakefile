@@ -84,6 +84,11 @@ rule criprDetect:
     module load gcc/9.3.0
     module load blast+/2.13.0
     module load emboss/6.6.0
+  
+    # Add local clustalw location to PATH for CRISPRDetect to find (See CRISPRDetect_setup.sh for installation details)
+    if [[ ":$PATH:" != *"clustalw:"* ]]; then
+      PATH=$PATH:$(pwd)/clustalw
+    fi
 
     parallel --jobs 32 < scripts/bash_jobs/crisprDetect/ncbi_crisprDetect_{wildcards.batch}.sh > {log} || true
 

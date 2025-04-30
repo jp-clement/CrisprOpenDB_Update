@@ -13,6 +13,8 @@
 /output/archive/*
 /output/spacers/*
 /output/taxonomy/*
+/CRISPRDetect_2.2
+/clustalw
 
 *.log
 *.err

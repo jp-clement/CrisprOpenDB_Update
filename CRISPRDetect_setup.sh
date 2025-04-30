@@ -11,8 +11,10 @@ cpan Parallel::ForkManager
 
 wget http://www.clustal.org/download/current/clustalw-2.1-linux-x86_64-libcppstatic.tar.gz
 tar xvzf clustalw-2.1-linux-x86_64-libcppstatic.tar.gz
-mv clustalw-2.1-linux-x86_64-libcppstatic/clustalw2 /home/${USER}/bin/clustalw 
+rm clustalw-2.1-linux-x86_64-libcppstatic.tar.gz
 
+cp clustalw-2.1-linux-x86_64-libcppstatic/clustalw2 clustalw 
+rm -r clustalw-2.1-linux-x86_64-libcppstatic
 
 
 ####################################
@@ -20,7 +22,8 @@ mv clustalw-2.1-linux-x86_64-libcppstatic/clustalw2 /home/${USER}/bin/clustalw
 ####################################
 # git clone https://github.com/ambarishbiswas/CRISPRDetect_2.2.git
 
-#### Need to add this bit of text between line 28 "our $tmp_dir="$cd_path/tmp";" and line 29 "my $no_of_threads=4;" of CRISPRDtect.pl 
+#### Need to add this bit of text MANUALLY between line 28 "our $tmp_dir="$cd_path/tmp";" and line 29 "my $no_of_threads=4;" of CRISPRDtect.pl 
+
 
 ######### Added the little section below to handle the command line -tmp_dir option properly. (plpla) #########
 # for(my $i=0;$i<=$#ARGV;$i++){
