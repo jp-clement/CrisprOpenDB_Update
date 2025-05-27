@@ -85,7 +85,7 @@ rule criprDetect:
     module load blast+/2.13.0
     module load emboss/6.6.0
   
-    # Add local clustalw location to PATH for CRISPRDetect to find (See CRISPRDetect_setup.sh for installation details)
+    # Add local clustalw location to PATH for CRISPRDetect to find (Read the CRISPRDetect_setup.sh for installation details * some steps need to be done manually)
     if [[ ":$PATH:" != *"clustalw:"* ]]; then
       PATH=$PATH:$(pwd)/clustalw
     fi
@@ -127,14 +127,14 @@ rule fetch_taxonomy:
   group:
     "batch_group"
   log:
-      "logs/saveSpacers/spacers_{batch}.log"
+      "logs/fetch_taxonomy/fetch_taxonomy_{batch}.log"
   threads: 1    
   shell:
     """
     module load StdEnv/2020 
     source DB_UPDATE/bin/activate
 
-    python scripts/python/fetch_taxonomy.py --input output/spacers/spacers_{wildcards.batch}.tsv --output output/taxonomy/taxonomy_{wildcards.batch}.tsv >> {log} 1>&2
+    python scripts/python/fetch_taxonomy.py --input output/spacers/spacers_{wildcards.batch}.tsv --output output/taxonomy/taxonomy_{wildcards.batch}.tsv >> {log} 1>&2 || true
 
     touch {output}
     """

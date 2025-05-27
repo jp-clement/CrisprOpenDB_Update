@@ -13,7 +13,7 @@ use-singularity: "False"
 printshellcmds: "True"
 use-envmodules: "True"
 group-components: "batch_group=1"
-jobs: "4"
+jobs: "15"
 cores: "32" 
 
 
@@ -32,12 +32,12 @@ set-threads:
 set-resources:
   - download:mem_mb=1000
   - download:runtime=60
-  - criprDetect:runtime=300
+  - criprDetect:runtime=1080
   - criprDetect:mem_mb=32000
   - updateDB:runtime=60
   - updateDB:mem_mb=4000
   - unzip:runtime=10
-  - fetch_taxonomy:runtime=300
+  - fetch_taxonomy:runtime=600
   - fetch_taxonomy:mem_mb=4000
   # - criprDetect:partition=default
   
